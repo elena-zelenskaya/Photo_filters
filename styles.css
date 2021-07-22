@@ -1,0 +1,24 @@
+body {
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+.container {
+	margin:0 auto;
+	width: fit-content;
+}
+
+canvas {
+	border:2px solid lightgray;
+	width:550px;
+	display:block;
+	
+}
+
+input {
+	font-size:18px;
+}

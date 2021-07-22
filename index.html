@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Image Filters</title>
+	<script src='https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js'></script> 
+	<script src='scripts.js'></script>
+	<link rel="stylesheet" href="styles.css"></link>
+</head>
+<body>
+	<h1>Image Filters</h1>
+	<div class="container"><canvas id="canvas"></canvas>
+	
+<p><input type="file" multiple="false" accept="image/*" id='finput' onchange="upload()"></p>
+	<p><input type="button" onclick="makeGray()" value="Grayscale">
+	<input type="button" onclick="makeRainbow()" value="Rainbow">
+	<input type="button" onclick="makeRed()" value="Red">
+	<input type="button" onclick="makeBlur()" value="Blur"></p>
+	<p><input type="button" onclick="reset()" value="Reset Image"></p></div>
+</body>
+</html>
