@@ -28,7 +28,6 @@ function makeGray() {
 	if (isLoaded(gray_image) && first_gray_filter) {
 		filterGray();
 		gray_image.drawTo(canvas);
-		return_to_original(gray_image);
 	}
 }
 
@@ -56,7 +55,12 @@ function makeRainbow() {
 	}
 }
 
-function makeBlur() {}
+function makeBlur() {
+	if (isLoaded(blur_image) && first_blur_filter) {
+		filterBlur();
+		blur_image.drawTo(canvas);
+	}
+}
 
 function filterGray() {
 	for (var pixel of gray_image.values()) {
@@ -98,19 +102,135 @@ function filterWindowPane() {
 }
 
 function filterRainbow() {
-	for (var pixel of red_image.values()) {
+	var one_seventh = rainbow_image.getHeight()/7;
+	for (var pixel of rainbow_image.values()) {
 		var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
-		if (avg < 128) {
-			pixel.setRed(2 * avg);
-			pixel.setGreen(0);
-			pixel.setBlue(0);
-		} else {
-			pixel.setRed(255);
-			pixel.setGreen(2 * avg - 255);
-			pixel.setBlue(2 * avg - 255);
+		var y = pixel.getY();
+		if (y < one_seventh) {
+			if (avg < 128) {
+				pixel.setRed(2 * avg);
+				pixel.setGreen(0);
+				pixel.setBlue(0);
+			} else {
+				pixel.setRed(255);
+				pixel.setGreen(2 * avg - 255);
+				pixel.setBlue(2 * avg - 255);
+			}
 		}
+		else if (y >= one_seventh && y < 2 * one_seventh) {
+			if (avg < 128) {
+				pixel.setRed(2 * avg);
+				pixel.setGreen(0.8 * avg);
+				pixel.setBlue(0);
+			} else {
+				pixel.setRed(255);
+				pixel.setGreen(1.2 * avg - 51);
+				pixel.setBlue(2 * avg - 255);
+			}
+		}
+		else if (y >= 2 * one_seventh && y < 3 * one_seventh) {
+			if (avg < 128) {
+				pixel.setRed(2 * avg);
+				pixel.setGreen(2 * avg);
+				pixel.setBlue(0);
+			} else {
+				pixel.setRed(255);
+				pixel.setGreen(255);
+				pixel.setBlue(2 * avg - 255);
+			}
+		}
+		else if (y >= 3 * one_seventh && y < 4 * one_seventh) {
+			if (avg < 128) {
+				pixel.setRed(0);
+				pixel.setGreen(2 * avg);
+				pixel.setBlue(0);
+			} else {
+				pixel.setRed(2 * avg - 255);
+				pixel.setGreen(255);
+				pixel.setBlue(2 * avg - 255);
+			}
+		}
+		else if (y >= 4 * one_seventh && y < 5 * one_seventh) {
+			if (avg < 128) {
+				pixel.setRed(0);
+				pixel.setGreen(0);
+				pixel.setBlue(2 * avg);
+			} else {
+				pixel.setRed(2 * avg - 255);
+				pixel.setGreen(2 * avg - 255);
+				pixel.setBlue(255);
+			}
+		}
+		else if (y >= 5 * one_seventh && y < 6 * one_seventh) {
+			if (avg < 128) {
+				pixel.setRed(0.8 * avg);
+				pixel.setGreen(0);
+				pixel.setBlue(2 * avg);
+			} else {
+				pixel.setRed(1.2 * avg - 51);
+				pixel.setGreen(2 * avg - 255);
+				pixel.setBlue(255);
+			}
+		}
+		else {
+			if (avg < 128) {
+				pixel.setRed(1.6 * avg);
+				pixel.setGreen(0);
+				pixel.setBlue(1.6 * avg);
+			} else {
+				pixel.setRed(0.4 * avg + 153);
+				pixel.setGreen(2 * avg - 255);
+				pixel.setBlue(0.4 * avg + 153);
+			}
+		}
+		
 	}
 	first_rainbow_filter = false;
+}
+
+function filterBlur() {
+	var blank_image = new SimpleImage(blur_image.getWidth(), blur_image.getHeight());
+	for (var pixel of blur_image.values()) {
+		var random = Math.random();
+		if (random < 0.5) {
+			blank_image.setPixel(pixel.getX(), pixel.getY(), pixel)
+		}
+		else {
+			blank_image.setPixel(pixel.getX(), pixel.getY(), nearbyPixel(blur_image, pixel));
+		}
+	}
+	blur_image = blank_image;
+	first_blur_filter = false;
+}
+
+function nearbyPixel(image, pixel) {
+	var x = pixel.getX();
+	var y = pixel.getY();
+	var random_x = Math.floor(Math.random() * 10) + 1;
+	var random_y = Math.floor(Math.random() * 10) + 1;
+	var random = Math.random();
+	if (random < 0.5) {
+		x += random_x;
+		y -= random_y;
+	}
+	else {
+		x -= random_x;
+		y += random_y;
+	}
+	if (x < 0) {
+		x = -1 * x;
+	}
+	if (y < 0) {
+		y = -1 * y;
+	}
+	if (x >= image.getWidth()) {
+		x = image.getWidth() - random_x;
+	}
+	if (y >= image.getHeight()) {
+		y = image.getHeight() - random_y;
+	}
+	pixel = image.getPixel(x,y);
+	return pixel;
 }
 
 function isLoaded(image) {
@@ -135,5 +255,6 @@ function reset() {
 		first_gray_filter = true;
 		first_window_pane_filter = true;
 		first_rainbow_filter = true;
+		first_blur_filter = true;
 	}
 }
