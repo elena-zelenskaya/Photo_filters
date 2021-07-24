@@ -12,6 +12,11 @@ var first_window_pane_filter = true;
 var first_rainbow_filter = true;
 var first_blur_filter = true;
 
+function setImageSize(image) {
+	var p = document.getElementById("image_size");
+	p.innerHTML = image.getWidth() + ' x ' + image.getHeight();
+}
+
 function upload() {
 	input = document.getElementById("finput");
 	original_image = new SimpleImage(input);
@@ -22,6 +27,7 @@ function upload() {
 	window_pane_image = new SimpleImage(input);
 	canvas = document.getElementById("canvas");
 	original_image.drawTo(canvas);
+	setTimeout(function() {setImageSize(original_image)}, 100);	
 }
 
 function makeGray() {

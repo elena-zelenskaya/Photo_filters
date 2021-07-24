@@ -4,36 +4,45 @@ body {
 	background-color: #30473f;
 }
 
+h1,
+h2 {
+	color: mintcream;
+}
+
 h1 {
 	text-align: center;
-	color:mintcream;
 }
 
 .container {
-	margin:0 auto;
+	margin: 0 auto;
 	width: fit-content;
 }
 
 canvas {
-	border:2px solid mintcream;
-	width:550px;
-	display:block;
-	
+	border: 2px solid mintcream;
+	width: fit-content;
+	display: block;
+	margin:0 auto;
 }
 
 input {
-	font-size:18px;
+	font-size: 18px;
 }
 
 input[type="button"] {
-	padding:8px;
+	padding: 8px;
 	background-color: #00807a;
-	color:mintcream;
-	border:1px outset #00807a;
+	color: mintcream;
+	border: 1px outset #00807a;
 	margin: 3px 5px;
-	cursor:pointer;
+	cursor: pointer;
 }
 
 input[type="file"] {
-	margin-left:5px;
+	margin-left: 5px;
+}
+
+p {
+	color:mintcream;
+	font-size: 18px;
 }
