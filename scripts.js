@@ -4,9 +4,13 @@ var blur_image = null;
 var rainbow_image = null;
 var gray_image = null;
 var red_image = null;
+var window_pane_image = null;
 var canvas = null;
 var first_red_filter = true;
 var first_gray_filter = true;
+var first_window_pane_filter = true;
+var first_rainbow_filter = true;
+var first_blur_filter = true;
 
 function upload() {
 	input = document.getElementById("finput");
@@ -15,6 +19,7 @@ function upload() {
 	gray_image = new SimpleImage(input);
 	rainbow_image = new SimpleImage(input);
 	blur_image = new SimpleImage(input);
+	window_pane_image = new SimpleImage(input);
 	canvas = document.getElementById("canvas");
 	original_image.drawTo(canvas);
 }
@@ -33,6 +38,25 @@ function makeRed() {
 		red_image.drawTo(canvas);
 	}
 }
+
+
+function makeWindowPane() {
+	if (isLoaded(window_pane_image) && first_window_pane_filter) {
+		filterWindowPane();
+		window_pane_image.drawTo(canvas);
+	}
+}
+
+
+
+function makeRainbow() {
+	if (isLoaded(rainbow_image) && first_rainbow_filter) {
+		filterRainbow();
+		rainbow_image.drawTo(canvas);
+	}
+}
+
+function makeBlur() {}
 
 function filterGray() {
 	for (var pixel of gray_image.values()) {
@@ -60,9 +84,34 @@ function filterRed() {
 	first_red_filter = false;
 }
 
-function makeRainbow() {}
+function filterWindowPane() {
+	for (var pixel of window_pane_image.values()) {
+		var x = pixel.getX();
+		var y = pixel.getY();
+		if (y < 15 || y > window_pane_image.getHeight() - 15 || x < 15 || x > window_pane_image.getWidth() -15 || (y > window_pane_image.getHeight()/2 - 5 && y < window_pane_image.getHeight()/2 + 5) || (x > window_pane_image.getWidth()/4 - 5 && x < window_pane_image.getWidth()/4 + 5) || (x > window_pane_image.getWidth()/2 - 5 && x < window_pane_image.getWidth()/2 + 5) || (x > 3 * window_pane_image.getWidth()/4 - 5 && x < 3 * window_pane_image.getWidth()/4 + 5)) {
+			pixel.setRed(106);
+			pixel.setGreen(65);
+			pixel.setBlue(14);
+		}
+	}
+	first_window_pane_filter = false;
+}
 
-function makeBlur() {}
+function filterRainbow() {
+	for (var pixel of red_image.values()) {
+		var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+		if (avg < 128) {
+			pixel.setRed(2 * avg);
+			pixel.setGreen(0);
+			pixel.setBlue(0);
+		} else {
+			pixel.setRed(255);
+			pixel.setGreen(2 * avg - 255);
+			pixel.setBlue(2 * avg - 255);
+		}
+	}
+	first_rainbow_filter = false;
+}
 
 function isLoaded(image) {
 	if (image != null && image.complete()) {
@@ -73,11 +122,6 @@ function isLoaded(image) {
 	}
 }
 
-function return_to_original(image) {
-	if (isLoaded(image)) {
-		image = new SimpleImage(input);
-	}
-}
 
 function reset() {
 	if (isLoaded(original_image)) {
@@ -86,7 +130,10 @@ function reset() {
 		gray_image = new SimpleImage(input);
 		blur_image = new SimpleImage(input);
 		rainbow_image = new SimpleImage(input);
+		window_pane_image = new SimpleImage(input);
 		first_red_filter = true;
 		first_gray_filter = true;
+		first_window_pane_filter = true;
+		first_rainbow_filter = true;
 	}
 }
