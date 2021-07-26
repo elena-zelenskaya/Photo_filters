@@ -20,7 +20,7 @@ h1 {
 
 canvas {
 	border: 2px solid mintcream;
-	width: fit-content;
+	width: 600px;
 	display: block;
 	margin:0 auto;
 }
