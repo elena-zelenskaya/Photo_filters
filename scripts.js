@@ -6,6 +6,7 @@ var gray_image = null;
 var red_image = null;
 var orange_image = null;
 var yellow_image = null;
+var green_image = null;
 var window_pane_image = null;
 var canvas = null;
 var first_red_filter;
@@ -15,6 +16,7 @@ var first_rainbow_filter;
 var first_blur_filter;
 var first_orange_filter;
 var first_yellow_filter;
+var first_green_filter;
 
 function setImageSize(image) {
 	var p = document.getElementById("image_size");
@@ -36,6 +38,7 @@ function upload() {
 	window_pane_image = new SimpleImage(input);
 	orange_image = new SimpleImage(input);
 	yellow_image = new SimpleImage(input);
+	green_image = new SimpleImage(input);
 	first_red_filter = true;
 	first_gray_filter = true;
 	first_window_pane_filter = true;
@@ -43,6 +46,7 @@ function upload() {
 	first_blur_filter = true;
 	first_orange_filter = true;
 	first_yellow_filter = true;
+	first_green_filter = true;
 }
 
 function makeGray() {
@@ -70,6 +74,13 @@ function makeYellow() {
 	if (isLoaded(yellow_image) && first_yellow_filter) {
 		filterYellow();
 		yellow_image.drawTo(canvas);
+	}
+}
+
+function makeGreen() {
+	if (isLoaded(green_image) && first_green_filter) {
+		filterGreen();
+		green_image.drawTo(canvas);
 	}
 }
 
@@ -150,6 +161,22 @@ function filterYellow() {
 		}
 	}
 	first_yellow_filter = false;
+}
+
+function filterGreen() {
+	for (var pixel of green_image.values()) {
+		var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+		if (avg < 128) {
+			pixel.setRed(0);
+			pixel.setGreen(2 * avg);
+			pixel.setBlue(0);
+		} else {
+			pixel.setRed(2 * avg - 255);
+			pixel.setGreen(255);
+			pixel.setBlue(2 * avg - 255);
+		}
+	}
+	first_green_filter = false;
 }
 
 function filterWindowPane() {
@@ -325,6 +352,7 @@ function reset() {
 		blur_image = new SimpleImage(input);
 		orange_image = new SimpleImage(input);
 		yellow_image = new SimpleImage(input);
+		green_image = new SimpleImage(input);
 		rainbow_image = new SimpleImage(input);
 		window_pane_image = new SimpleImage(input);
 		first_red_filter = true;
@@ -334,5 +362,6 @@ function reset() {
 		first_blur_filter = true;
 		first_orange_filter = true;
 		first_yellow_filter = true;
+		first_green_filter = true;
 	}
 }
