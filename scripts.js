@@ -17,6 +17,7 @@ var first_blur_filter;
 var first_orange_filter;
 var first_yellow_filter;
 var first_green_filter;
+var first_blue_filter;
 
 function setImageSize(image) {
 	var p = document.getElementById("image_size");
@@ -30,7 +31,7 @@ function upload() {
 	setTimeout(function () {
 		setImageSize(original_image);
 		original_image.drawTo(canvas);
-	}, 300);
+	}, 700);
 	red_image = new SimpleImage(input);
 	gray_image = new SimpleImage(input);
 	rainbow_image = new SimpleImage(input);
@@ -39,6 +40,7 @@ function upload() {
 	orange_image = new SimpleImage(input);
 	yellow_image = new SimpleImage(input);
 	green_image = new SimpleImage(input);
+	blue_image = new SimpleImage(input);
 	first_red_filter = true;
 	first_gray_filter = true;
 	first_window_pane_filter = true;
@@ -47,6 +49,7 @@ function upload() {
 	first_orange_filter = true;
 	first_yellow_filter = true;
 	first_green_filter = true;
+	first_blue_filter = true;
 }
 
 function makeGray() {
@@ -82,6 +85,22 @@ function makeGreen() {
 		filterGreen();
 		green_image.drawTo(canvas);
 	}
+}
+
+function makeBlue() {
+	if (isLoaded(blue_image) && first_blue_filter) {
+		filterBlue();
+		blue_image.drawTo(canvas);
+	}
+}
+
+
+function makeViolet() {
+	
+}
+
+function makePurple() {
+	
 }
 
 function makeWindowPane() {
@@ -177,6 +196,22 @@ function filterGreen() {
 		}
 	}
 	first_green_filter = false;
+}
+
+function filterBlue() {
+	for (var pixel of blue_image.values()) {
+		var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+		if (avg < 128) {
+			pixel.setRed(0);
+			pixel.setGreen(0);
+			pixel.setBlue(2 * avg);
+		} else {
+			pixel.setRed(2 * avg - 255);
+			pixel.setGreen(2 * avg - 255);
+			pixel.setBlue(255);
+		}
+	}
+	first_blue_filter = false;
 }
 
 function filterWindowPane() {
@@ -353,6 +388,7 @@ function reset() {
 		orange_image = new SimpleImage(input);
 		yellow_image = new SimpleImage(input);
 		green_image = new SimpleImage(input);
+		blue_image = new SimpleImage(input);
 		rainbow_image = new SimpleImage(input);
 		window_pane_image = new SimpleImage(input);
 		first_red_filter = true;
@@ -363,5 +399,6 @@ function reset() {
 		first_orange_filter = true;
 		first_yellow_filter = true;
 		first_green_filter = true;
+		first_blue_filter = true;
 	}
 }
