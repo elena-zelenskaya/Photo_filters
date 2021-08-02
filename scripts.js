@@ -11,6 +11,7 @@ var blue_image = null;
 var violet_image = null;
 var purple_image = null;
 var window_pane_image = null;
+var invert_image = null;
 var canvas = null;
 var first_red_filter;
 var first_gray_filter;
@@ -23,6 +24,7 @@ var first_green_filter;
 var first_blue_filter;
 var first_violet_filter;
 var first_purple_filter;
+var first_invert_filter;
 
 function setImageSize(image) {
 	var p = document.getElementById("image_size");
@@ -42,6 +44,7 @@ function upload() {
 	rainbow_image = new SimpleImage(input);
 	blur_image = new SimpleImage(input);
 	window_pane_image = new SimpleImage(input);
+	invert_image = new SimpleImage(input);
 	orange_image = new SimpleImage(input);
 	yellow_image = new SimpleImage(input);
 	green_image = new SimpleImage(input);
@@ -59,6 +62,7 @@ function upload() {
 	first_blue_filter = true;
 	first_violet_filter = true;
 	first_purple_filter = true;
+	first_invert_filter = true;
 }
 
 function makeGray() {
@@ -136,6 +140,13 @@ function makeBlur() {
 	if (isLoaded(blur_image) && first_blur_filter) {
 		filterBlur();
 		blur_image.drawTo(canvas);
+	}
+}
+
+function makeInvert() {
+	if (isLoaded(invert_image) && first_invert_filter) {
+		filterInvert();
+		invert_image.drawTo(canvas);
 	}
 }
 
@@ -417,6 +428,17 @@ function nearbyPixel(image, pixel) {
 	return pixel;
 }
 
+function filterInvert() {
+	for (var pixel of invert_image.values()) {
+		pixel.setRed(255 - pixel.getRed());
+		pixel.setGreen(255 - pixel.getGreen());
+		pixel.setBlue(255 - pixel.getBlue());
+		invert_image.setPixel(pixel.getX(), pixel.getY(), pixel);
+	}
+
+	first_invert_filter = false;
+}
+
 function isLoaded(image) {
 	if (image != null && image.complete()) {
 		return true;
@@ -440,6 +462,7 @@ function reset() {
 		rainbow_image = new SimpleImage(input);
 		window_pane_image = new SimpleImage(input);
 		window_purple_image = new SimpleImage(input);
+		invert_image = new SimpleImage(input);
 		first_red_filter = true;
 		first_gray_filter = true;
 		first_window_pane_filter = true;
@@ -451,5 +474,6 @@ function reset() {
 		first_blue_filter = true;
 		first_violet_filter = true;
 		first_purple_filter = true;
+		first_invert_filter = true;
 	}
 }
