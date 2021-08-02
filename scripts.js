@@ -9,6 +9,7 @@ var yellow_image = null;
 var green_image = null;
 var blue_image = null;
 var violet_image = null;
+var purple_image = null;
 var window_pane_image = null;
 var canvas = null;
 var first_red_filter;
@@ -21,6 +22,7 @@ var first_yellow_filter;
 var first_green_filter;
 var first_blue_filter;
 var first_violet_filter;
+var first_purple_filter;
 
 function setImageSize(image) {
 	var p = document.getElementById("image_size");
@@ -45,6 +47,7 @@ function upload() {
 	green_image = new SimpleImage(input);
 	blue_image = new SimpleImage(input);
 	violet_image = new SimpleImage(input);
+	purple_image = new SimpleImage(input);
 	first_red_filter = true;
 	first_gray_filter = true;
 	first_window_pane_filter = true;
@@ -55,6 +58,7 @@ function upload() {
 	first_green_filter = true;
 	first_blue_filter = true;
 	first_violet_filter = true;
+	first_purple_filter = true;
 }
 
 function makeGray() {
@@ -108,7 +112,10 @@ function makeViolet() {
 }
 
 function makePurple() {
-	
+	if (isLoaded(purple_image) && first_purple_filter) {
+		filterPurple();
+		purple_image.drawTo(canvas);
+	}
 }
 
 function makeWindowPane() {
@@ -236,6 +243,22 @@ function filterViolet() {
 		}
 	}
 	first_violet_filter = false;
+}
+
+function filterPurple() {
+	for (var pixel of purple_image.values()) {
+		var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
+		if (avg < 128) {
+			pixel.setRed(1.6 * avg);
+			pixel.setGreen(0);
+			pixel.setBlue(1.6 * avg);
+		} else {
+			pixel.setRed(0.4 * avg + 153);
+			pixel.setGreen(2 * avg - 255);
+			pixel.setBlue(0.4 * avg + 153);
+		}
+	}
+	first_purple_filter = false;
 }
 
 function filterWindowPane() {
@@ -416,6 +439,7 @@ function reset() {
 		violet_image = new SimpleImage(input);
 		rainbow_image = new SimpleImage(input);
 		window_pane_image = new SimpleImage(input);
+		window_purple_image = new SimpleImage(input);
 		first_red_filter = true;
 		first_gray_filter = true;
 		first_window_pane_filter = true;
@@ -426,5 +450,6 @@ function reset() {
 		first_green_filter = true;
 		first_blue_filter = true;
 		first_violet_filter = true;
+		first_purple_filter = true;
 	}
 }
