@@ -13,18 +13,7 @@ var purple_image = null;
 var window_pane_image = null;
 var invert_image = null;
 var canvas = null;
-var first_red_filter;
-var first_gray_filter;
-var first_window_pane_filter;
-var first_rainbow_filter;
-var first_blur_filter;
-var first_orange_filter;
-var first_yellow_filter;
-var first_green_filter;
-var first_blue_filter;
-var first_violet_filter;
-var first_purple_filter;
-var first_invert_filter;
+
 
 function setImageSize(image) {
 	var p = document.getElementById("image_size");
@@ -51,102 +40,103 @@ function upload() {
 	blue_image = new SimpleImage(input);
 	violet_image = new SimpleImage(input);
 	purple_image = new SimpleImage(input);
-	first_red_filter = true;
-	first_gray_filter = true;
-	first_window_pane_filter = true;
-	first_rainbow_filter = true;
-	first_blur_filter = true;
-	first_orange_filter = true;
-	first_yellow_filter = true;
-	first_green_filter = true;
-	first_blue_filter = true;
-	first_violet_filter = true;
-	first_purple_filter = true;
-	first_invert_filter = true;
+
 }
 
 function makeGray() {
-	if (isLoaded(gray_image) && first_gray_filter) {
+	if (isLoaded(gray_image)) {
 		filterGray();
 		gray_image.drawTo(canvas);
+		gray_image = new SimpleImage(input)
 	}
 }
 
 function makeRed() {
-	if (isLoaded(red_image) && first_red_filter) {
+	if (isLoaded(red_image)) {
 		filterRed();
 		red_image.drawTo(canvas);
+		red_image = new SimpleImage(input)
 	}
 }
 
 function makeOrange() {
-	if (isLoaded(orange_image) && first_orange_filter) {
+	if (isLoaded(orange_image)) {
 		filterOrange();
 		orange_image.drawTo(canvas);
+		orange_image = new SimpleImage(input)
 	}
 }
 
 function makeYellow() {
-	if (isLoaded(yellow_image) && first_yellow_filter) {
+	if (isLoaded(yellow_image)) {
 		filterYellow();
 		yellow_image.drawTo(canvas);
+		yellow_image = new SimpleImage(input);
 	}
 }
 
 function makeGreen() {
-	if (isLoaded(green_image) && first_green_filter) {
+	if (isLoaded(green_image)) {
 		filterGreen();
 		green_image.drawTo(canvas);
+		green_image = new SimpleImage(input);
 	}
 }
 
 function makeBlue() {
-	if (isLoaded(blue_image) && first_blue_filter) {
+	if (isLoaded(blue_image)) {
 		filterBlue();
 		blue_image.drawTo(canvas);
+		blue_image = new SimpleImage(input);
 	}
 }
 
 
 function makeViolet() {
-	if (isLoaded(violet_image) && first_violet_filter) {
+	if (isLoaded(violet_image)) {
 		filterViolet();
 		violet_image.drawTo(canvas);
+		violet_image = new SimpleImage(input);
 	}
 }
 
 function makePurple() {
-	if (isLoaded(purple_image) && first_purple_filter) {
+	if (isLoaded(purple_image)) {
 		filterPurple();
 		purple_image.drawTo(canvas);
+		purple_image = new SimpleImage(input);
 	}
 }
 
 function makeWindowPane() {
-	if (isLoaded(window_pane_image) && first_window_pane_filter) {
+	if (isLoaded(window_pane_image)) {
 		filterWindowPane();
 		window_pane_image.drawTo(canvas);
+		window_pane_image = new SimpleImage(input);
 	}
 }
 
 function makeRainbow() {
-	if (isLoaded(rainbow_image) && first_rainbow_filter) {
+	if (isLoaded(rainbow_image)) {
 		filterRainbow();
 		rainbow_image.drawTo(canvas);
+		rainbow_image = new SimpleImage(input);
 	}
 }
 
 function makeBlur() {
-	if (isLoaded(blur_image) && first_blur_filter) {
+	if (isLoaded(blur_image)) {
 		filterBlur();
 		blur_image.drawTo(canvas);
+		blur_image = new SimpleImage(input);
 	}
 }
 
 function makeInvert() {
-	if (isLoaded(invert_image) && first_invert_filter) {
+	if (isLoaded(invert_image)) {
 		filterInvert();
 		invert_image.drawTo(canvas);
+		invert_image = new SimpleImage(input);
 	}
 }
 
@@ -157,7 +147,7 @@ function filterGray() {
 		pixel.setGreen(avg);
 		pixel.setBlue(avg);
 	}
-	first_gray_filter = false;
+
 }
 
 function filterRed() {
@@ -173,7 +163,7 @@ function filterRed() {
 			pixel.setBlue(2 * avg - 255);
 		}
 	}
-	first_red_filter = false;
+
 }
 
 function filterOrange() {
@@ -189,7 +179,7 @@ function filterOrange() {
 			pixel.setBlue(2 * avg - 255);
 		}
 	}
-	first_orange_filter = false;
+
 }
 
 function filterYellow() {
@@ -205,7 +195,7 @@ function filterYellow() {
 			pixel.setBlue(2 * avg - 255);
 		}
 	}
-	first_yellow_filter = false;
+
 }
 
 function filterGreen() {
@@ -221,7 +211,7 @@ function filterGreen() {
 			pixel.setBlue(2 * avg - 255);
 		}
 	}
-	first_green_filter = false;
+
 }
 
 function filterBlue() {
@@ -237,7 +227,7 @@ function filterBlue() {
 			pixel.setBlue(255);
 		}
 	}
-	first_blue_filter = false;
+
 }
 
 function filterViolet() {
@@ -253,7 +243,7 @@ function filterViolet() {
 			pixel.setBlue(255);
 		}
 	}
-	first_violet_filter = false;
+
 }
 
 function filterPurple() {
@@ -269,7 +259,7 @@ function filterPurple() {
 			pixel.setBlue(0.4 * avg + 153);
 		}
 	}
-	first_purple_filter = false;
+
 }
 
 function filterWindowPane() {
@@ -295,7 +285,7 @@ function filterWindowPane() {
 			pixel.setBlue(14);
 		}
 	}
-	first_window_pane_filter = false;
+
 }
 
 function filterRainbow() {
@@ -375,7 +365,7 @@ function filterRainbow() {
 			}
 		}
 	}
-	first_rainbow_filter = false;
+
 }
 
 function filterBlur() {
@@ -396,7 +386,7 @@ function filterBlur() {
 		}
 	}
 	blur_image = blank_image;
-	first_blur_filter = false;
+
 }
 
 function nearbyPixel(image, pixel) {
@@ -436,7 +426,6 @@ function filterInvert() {
 		invert_image.setPixel(pixel.getX(), pixel.getY(), pixel);
 	}
 
-	first_invert_filter = false;
 }
 
 function isLoaded(image) {
@@ -463,17 +452,5 @@ function reset() {
 		window_pane_image = new SimpleImage(input);
 		window_purple_image = new SimpleImage(input);
 		invert_image = new SimpleImage(input);
-		first_red_filter = true;
-		first_gray_filter = true;
-		first_window_pane_filter = true;
-		first_rainbow_filter = true;
-		first_blur_filter = true;
-		first_orange_filter = true;
-		first_yellow_filter = true;
-		first_green_filter = true;
-		first_blue_filter = true;
-		first_violet_filter = true;
-		first_purple_filter = true;
-		first_invert_filter = true;
 	}
 }
