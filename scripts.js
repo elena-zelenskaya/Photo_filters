@@ -290,7 +290,7 @@ function filterWindowPane() {
 
 function filterRainbow() {
 	var one_seventh = rainbow_image.getHeight() / 7;
-	for (var pixel of rainbow_image.values()) {
+	for (var pixel of rainbow_image.values()) { 
 		var avg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
 		var y = pixel.getY();
 		if (y < one_seventh) {
@@ -440,17 +440,5 @@ function isLoaded(image) {
 function reset() {
 	if (isLoaded(original_image)) {
 		original_image.drawTo(canvas);
-		red_image = new SimpleImage(input);
-		gray_image = new SimpleImage(input);
-		blur_image = new SimpleImage(input);
-		orange_image = new SimpleImage(input);
-		yellow_image = new SimpleImage(input);
-		green_image = new SimpleImage(input);
-		blue_image = new SimpleImage(input);
-		violet_image = new SimpleImage(input);
-		rainbow_image = new SimpleImage(input);
-		window_pane_image = new SimpleImage(input);
-		window_purple_image = new SimpleImage(input);
-		invert_image = new SimpleImage(input);
 	}
 }
